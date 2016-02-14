@@ -35,13 +35,18 @@ void merge_sort_sdm(int *arr, int length, int *grpArr, int grpLength)
 {
 	if(grpLength == 0)
 		return;
+
 	int start = 0;
-	for(int i = 0 ; i < grpLength ; i ++)
+	int newGrpArr[grpLength], grpCtr = 0;
+	for(int i = 0 ; i < grpLength ; i += 2 )
 	{
 		int mid = grpArr[i];
-		int end = grpArr[i+1];
+		int end = (i+1 <= grpLength)?grpArr[i+1]:grpArr[i];
+		newGrpArr[grpCtr++] = end;
 		merge(arr, start, mid, end);
+		start = end + 1;
 	}
+	merge_sort_sdm(arr, length, newGrpArr, grpCtr-1);
 }
 
 int main(void)
